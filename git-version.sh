@@ -18,15 +18,15 @@ filename=git-version.h
 if [ -n "$1" ]; then
     cd "$1"
 else
-    echo "You MUST specify the first param. Exiting..."
+    echo "Error: You MUST specify the source directory parameter. Exiting."
     exit 1
 fi
-echo "Executing source path = " $1
+echo "Changing " $filename " at source path = " $1
 
 if [ -f "$1/$filename" ]; then
-    echo "$1/$filename exist"
+    echo "$1/$filename exists"
 else
-    echo "$1/$filename not exist"
+    echo "$1/$filename does not exist"
     exit 0
 fi
 
@@ -38,7 +38,7 @@ else
 fi
 
 # Build a version string with git
-version=$(git describe --tags --always --dirty 2> /dev/null)
+version=$(git rev-list --short HEAD 2> /dev/null)
 
 if [ -n "$version" ]; then 
     echo "git version:" $version
@@ -48,13 +48,20 @@ else
 fi
 
 # If this is not a git repository, fallback to the compilation date
-#[ -n "$version" ] || version=$(date -I)
+[ -n "$version" ] || version=$(date -I)
 # If this is not a git repository, create an empty file
 #[ -n "$version" ] || echo "" > $filename; exit 1
 
 # Save this in git-version.h
 echo -n "Creating file" $filepath"..."
+
+echo "#ifndef __GIT_VERSION_H__" > $filepath
+echo "#define __GIT_VERSION_H__" > $filepath
+echo "" > $filepath
 echo "#define GIT_VERSION \"$version\"" > $filepath
+echo "" > $filepath
+echo "#endif // __GIT_VERSION_H__" > $filepath
+
 echo " Done!"
 
 #read -p "Press key to exit..." variable1
