@@ -32,7 +32,7 @@ This script provides an automatic versioning system for Arduino sketches based o
     
      (no need to modify global path)  
      
-     **On Window**, add git-version.bat to global path ([Add script to global path](https://docs.alfresco.com/4.2/tasks/fot-addpath.html)).
+     **On Windows**, add git-version.bat to global path ([Add script to global path](https://docs.alfresco.com/4.2/tasks/fot-addpath.html)).
 
   3. Add this script to prebuild hooks of Arduino toolchain. Created if not exist the file `platform.txt` inside `/path/to/arduino-application/hardware/`. On Windows, append the following line:  
      ```
