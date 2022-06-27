@@ -80,3 +80,12 @@ To configure your sketch you need to complete few steps:
 NOTE: GIT_VERSION is a string several (usually, 6-8) characters long comprising the ID of the latest Git commit, e.g.:
 
 - `916a4b9`
+
+## Troubleshooting
+
+To figure out why things aren't working, enable verbose output during compilation from the Arduino IDE:
+
+- **File**
+- **Preferences**
+- Tick _Show verbose output during_ **compilation**
+- Click **OK** in the **Preferences** window 
