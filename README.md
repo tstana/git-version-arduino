@@ -1,12 +1,14 @@
 # Git-describe for Arduino
 
-This script provides an automatic versioning system for Arduino sketches based on git tag. This approach guarantees a strong relationship between source code and the compiled firmware. Moreover, it will enforce the developer to maintain meaningful tags during the project development.
+This script provides an automatic versioning system for Arduino sketches based on git commit ID. This approach guarantees a strong relationship between source code and the compiled firmware. Moreover, it will enforce the developer to maintain meaningful tags during the project development.
+
+- **Note:** Forked from the excellent [repository](https://github.com/fabianoriccardi/git-describe-arduino) by [Fabiano Riccardi](https://github.com/fabianoriccardi/)
 
 ## Features
 
 - it defines the constant GIT_VERSION, visible in your source code, containing version details
 - No extraordinary hacking to Arduino IDE
-- Available for Window and Linux (MAC OS will be tested)
+- Available for Window and Linux
 
 ## Requirements
 
@@ -19,7 +21,7 @@ This script provides an automatic versioning system for Arduino sketches based o
   
   1. Clone this repository (e.g. you may locate it inside `/path/to/arduino-workspace/tools/`).
      ```
-     git clone https://github.com/fabiuz7/git-describe-arduino.git
+     git clone https://github.com/tstana/git-version-arduino.git
      ```
 
   2. **On Linux**, make script executable:  
@@ -34,48 +36,40 @@ This script provides an automatic versioning system for Arduino sketches based o
 
   3. Add this script to prebuild hooks of Arduino toolchain. Created if not exist the file `platform.txt` inside `/path/to/arduino-application/hardware/`. On Windows, append the following line:  
      ```
-     recipe.hooks.sketch.prebuild.1.pattern=git-version.bat "{build.source.path}/src" "{build.path}/sketch/src"
+     recipe.hooks.sketch.prebuild.1.pattern=git-version.bat "{build.source.path}/src" "{build.path}/sketch"
      ```  
      On Mac/Linux, append the following line:  
      ```
-     recipe.hooks.sketch.prebuild.1.pattern=/path/to/arduino-workspace/tools/git-version.sh "{build.source.path}/src" "{build.path}/sketch/src"
+     recipe.hooks.sketch.prebuild.1.pattern=/path/to/arduino-workspace/tools/git-version.sh "{build.source.path}/src" "{build.path}/sketch/"
      ```
 
 ## Usage
 
 To configure your sketch you need to complete few steps:
 
-  1. Create `src` folder in the sketch folder.
-  2. Create `git-version.h` in `src` folder. Leave the file empty because it is overwritten by the script.
-  3. If your repository is not under git, initialize a reposititory for the sketch and do the first commit.
+  1. Create `git-version.h` in `src` folder. Leave the file empty because it is overwritten by the script.
+  2. If your repository is not under git, initialize a reposititory for the sketch and do the first commit.
   3. Modify your sketch to include `git-version.h` and print the current version. Example:
       
      ```cpp
-     #include "src/git-version.h"
+     #include "git-version.h"
 
-     void setup() {
+     void setup()
+     {
        Serial.begin(115200);
        Serial.println();
        Serial.print("Git version: ");
        Serial.println(GIT_VERSION);
      }
 
-     void loop() {
+     void loop()
+     {
        // put your main code here, to run repeatedly: 
-  
      }
      ```
 
-  4. Compile and upload to see the result. Good versioning!
+  4. Compile and upload to see the result. Happy versioning!
 
-NOTE: GIT_VERSION is a string composed by 3 dash-separated fields:
+NOTE: GIT_VERSION is a string several (usually, 6-8) characters long comprising the ID of the latest Git commit, e.g.:
 
-- `lastest-git-tag`: printed if a tag exists
-- `number-of-commits-since-latest-tag`-`last-commits-short-hash`: printed if `number-of-commits-since-latest-tag` is not *0*
-- "dirty": printed if the working directory is dirty
-
-Example: 0.3.0-8-cc68a61-dirty
-
-## Motivation
-
-I was working on multiple projects simultaneously and it was difficult to remember the state of applications after a few months, especially when firmware were deployed on many microcontrollers. Hence, retrieving the precise version from compiled firmware became mandatory. Also, this practice seems a rule of thumb in many toolchains and environments. This script took inspiration from similar projects such as [git-describe](https://www.npmjs.com/package/git-describe) for JavaScript and NPM and [GitInfo](https://www.nuget.org/packages/GitInfo/) for C# and Visual Studio.
+- `916a4b9`
