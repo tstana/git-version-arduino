@@ -32,7 +32,15 @@ This script provides an automatic versioning system for Arduino sketches based o
     
      (no need to modify global path)  
      
-     **On Windows**, add git-version.bat to global path (Start Menu > Control Panel > Edit the system environment variables > Environment variables... > Select the "Path" variable under _System variables_ > Click Edit... > Browse to where you cloned the repo, e.g. `/path/to/arduino-workspace/tools/`).
+     **On Windows**, add git-version.bat to global path:
+     - Open _Start Menu_
+     - Bring up **Control Panel**
+     - Search for _Edit the system environment variables_
+     - Click **Environment variables...**
+     - Select the **Path** variable under _System variables_
+     - Click **Edit...** 
+     - **Browse** to where you cloned the repo, e.g., `/path/to/arduino-workspace/tools/` (alternatively: copy & paste from an Explorer window)
+     - **OK**/**OK**/**OK** until environment variable windows are closed
 
   3. Add this script to prebuild hooks of Arduino toolchain. Create if it does not exist the file `platform.txt` inside `/path/to/arduino-application/hardware/`. On Windows, append the following line:
      ```
