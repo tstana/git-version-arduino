@@ -32,24 +32,23 @@ This script provides an automatic versioning system for Arduino sketches based o
     
      (no need to modify global path)  
      
-     **On Windows**, add git-version.bat to global path ([Add script to global path](https://docs.alfresco.com/4.2/tasks/fot-addpath.html)).
+     **On Windows**, add git-version.bat to global path (Start Menu > Control Panel > Edit the system environment variables > Environment variables... > Select the "Path" variable under _System variables_ > Click Edit... > Browse to where you cloned the repo, e.g. `/path/to/arduino-workspace/tools/`).
 
-  3. Add this script to prebuild hooks of Arduino toolchain. Created if not exist the file `platform.txt` inside `/path/to/arduino-application/hardware/`. On Windows, append the following line:  
+  3. Add this script to prebuild hooks of Arduino toolchain. Create if it does not exist the file `platform.txt` inside `/path/to/arduino-application/hardware/`. On Windows, append the following line:
      ```
-     recipe.hooks.sketch.prebuild.1.pattern=git-version.bat "{build.source.path}/src" "{build.path}/sketch"
+     recipe.hooks.sketch.prebuild.1.pattern=git-version.bat "{build.source.path}"
      ```  
      On Mac/Linux, append the following line:  
      ```
-     recipe.hooks.sketch.prebuild.1.pattern=/path/to/arduino-workspace/tools/git-version.sh "{build.source.path}/src" "{build.path}/sketch/"
+     recipe.hooks.sketch.prebuild.1.pattern=/path/to/arduino-workspace/tools/git-version.sh "{build.source.path}"
      ```
 
 ## Usage
 
 To configure your sketch you need to complete few steps:
 
-  1. Create `git-version.h` in `src` folder. Leave the file empty because it is overwritten by the script.
-  2. If your repository is not under git, initialize a reposititory for the sketch and do the first commit.
-  3. Modify your sketch to include `git-version.h` and print the current version. Example:
+  1. If your repository is not under git, initialize a reposititory for the sketch and do the first commit.
+  2. Modify your sketch to include `git-version.h` and print the current version. Example:
       
      ```cpp
      #include "git-version.h"
@@ -68,7 +67,7 @@ To configure your sketch you need to complete few steps:
      }
      ```
 
-  4. Compile and upload to see the result. Happy versioning!
+  3. Compile and upload to see the result. Happy versioning!
 
 NOTE: GIT_VERSION is a string several (usually, 6-8) characters long comprising the ID of the latest Git commit, e.g.:
 
